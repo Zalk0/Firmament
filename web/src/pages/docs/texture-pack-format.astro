@@ -2,14 +2,13 @@
 import Base from "../../layouts/Base.astro";
 import NavBar from "../../components/NavBar.astro";
 import Content from "../../layouts/Content.astro";
-import MarkDown from './_texture-pack-format.md';
+import Markdown from "./_texture-pack-format.md";
+import "remark-github-blockquote-alert/alert.css";
 ---
 
 <Base title="Firmament Texture Packs">
 	<NavBar></NavBar>
 	<Content>
-		<MarkDown/>
+		<Markdown/>
 	</Content>
 </Base>
-
-
