@@ -483,7 +483,7 @@ in game as the regular SkyBlock id, not the resource pack identifier).
 
 ### Layers
 
-The `layers` specify the multiple texture layers that will be used when rendering. For non leather armor, or armor
+The `layers` specify the multiple texture layers that will be used when rendering. For non-leather armor, or armor
 ignoring the leather armor tint just one layer is enough.
 
 If you want to apply armor tint to the texture you will usually want two layers. The first layer has a tint applied:
@@ -497,24 +497,23 @@ If you want to apply armor tint to the texture you will usually want two layers.
 
 This will tint the texture before it is being rendered.
 
-The second layer will have no tint applied, but will have a suffix:
+The second layer will have no tint applied, but will have a suffix, typically `_overlay`:
 
 ```json
 {
-    "identifier": "firmskyblock:angler",
-    "suffix": "_overlay"
+    "identifier": "firmskyblock:angler_overlay"
 }
 ```
 
-This second layer is used for the countours of the armor.
+This second layer is used for the contours of the armor.
 
 The layer identifier will resolve to a texture file path according to vanilla armor texture rules like so:
 
-`assets/{identifier.namespace}/textures/models/armor/{identifier.path}_layer_{isLegs ? 2 : 1}{suffix}.png`
+`assets/{identifier.namespace}/textures/entity/equipment/humanoid{_leggings}/{identifier.path}{suffix}.png`
 
-Note that there is no automatic underscore insertion for suffix, so you will need to manually specify it if you want.
+The armor texture is in the `humanoid` folder whereas the leg armor piece's texture is in the `humanoid_leggings`
+folder, this is the same as in vanilla.
 
-The leg armor piece uses a different texture, same as with vanilla.
 
 ### Overrides
 
