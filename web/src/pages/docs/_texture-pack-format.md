@@ -9,11 +9,16 @@ SPDX-License-Identifier: CC0-1.0
 ## Items by internal id (ExtraAttributes)
 
 Find the internal id of the item. This is usually stored in the ExtraAttributes tag (Check the Power User Config for 
-keybinds). Once you found it, create an item model in a resource pack like you would for
-a vanilla item model, but at the coordinate `firmskyblock:<internalid>`. So for an aspect of the end, this would be 
-`firmskyblock:models/item/aspect_of_the_end.json` (or `assets/firmskyblock/models/item/aspect_of_the_end.json`). Then,
-just use a normal minecraft item model. See https://github.com/nea89o/BadSkyblockTP/blob/master/assets/firmskyblock/models/item/magma_rod.json
-as an example. The id is first turned to lower case, then gets `:` replaced with `___`, `;` with `__` and all other 
+keybinds). Once you found it, create an item definition in a resource pack like you would for
+a vanilla item definition, but at the coordinate `firmskyblock:<internalid>`. So for an aspect of the end, this would be 
+`firmskyblock:items/aspect_of_the_end.json` (or `assets/firmskyblock/items/aspect_of_the_end.json`). Then,
+just use a normal minecraft model, it would probably be placed there:
+`<namespace>:models/item/<subfolder>/aspect_of_the_end.json` (or
+`assets/<namespace>/models/item/<subfolder>/aspect_of_the_end.json`).
+You can have subfolders to organize the models but not the item definitions!
+Then add your png in `<namespace>:textures/item/<subfolder>/aspect_of_the_end.png`.
+Note that it is recommended to use your own namespace to avoid collisions with other resource packs.
+The id is first turned to lower case, then gets `:` replaced with `___`, `;` with `__` and all other 
 characters that cannot be used in a minecraft resource location with `__XXXX` where `XXXX` is the 4 digit hex code for 
 the character.
 
@@ -576,7 +581,10 @@ not screens from other mods. You can also target specific texts via a [string ma
 
 ## Screen Layout Replacement
 
-You can change the layout of an entire screen by using screen layout overrides. These get placed in `firmskyblock:overrides/screen_layout/*.json`, with one file per screen. You can match on the title of a screen, the type of screen, replace the background texture (including extending the background canvas further than vanilla allows you) and move slots around.
+You can change the layout of an entire screen by using screen layout overrides.
+These get placed in `firmskyblock:overrides/screen_layout/*.json`, with one file per screen.
+You can match on the title of a screen, the type of screen, replace the background texture
+(including extending the background canvas further than vanilla allows you) and move slots around.
 
 ### Selecting a screen
 
@@ -591,7 +599,8 @@ You can change the layout of an entire screen by using screen layout overrides. 
 }
 ```
 
-The `label` property is a regular [string matcher](#string-matcher) and matches against the screens title (typically the chest title, or "Crafting" for the players inventory).
+The `label` property is a regular [string matcher](#string-matcher) and matches against the screens title
+(typically the chest title, or "Crafting" for the players inventory).
 
 The `screenType` property is an optional namespaced identifier that allows matching to a [screen type](https://minecraft.wiki/w/Java_Edition_protocol/Inventory#Types).
 
@@ -614,7 +623,11 @@ The `screenType` property is an optional namespaced identifier that allows match
 }
 ```
 
-You need to specify an x and y offset relative to where the regular screen would render. This means you just check where the upper left corner of the UI texture would be in your texture (and turn it into a negative number). You also need to specify a width and height of your texture. This is the width in pixels rendered. If you want a higher or lower resolution texture, you can scale the actual texture up (tho it is expected to meet the same aspect ratio as the one defined here).
+You need to specify an x and y offset relative to where the regular screen would render.
+This means you just check where the upper left corner of the UI texture would be in your texture
+(and turn it into a negative number). You also need to specify a width and height of your texture.
+This is the width in pixels rendered. If you want a higher or lower resolution texture,
+you can scale the actual texture up (tho it is expected to meet the same aspect ratio as the one defined here).
 
 ### Moving slots around
 
@@ -635,7 +648,11 @@ You need to specify an x and y offset relative to where the regular screen would
 }
 ```
 
-You can move slots around by a specific index. This is not the index in the inventory, but rather the index in the screen (so if you have a chest screen then all the player inventory slots would be a higher index since the chest slots move them down the list). The x and y are relative to where the regular screen top left would be. Set to large values to effectively "delete" a slot by moving it offscreen.
+You can move slots around by a specific index. This is not the index in the inventory,
+but rather the index in the screen (so if you have a chest screen then all the player inventory slots
+would be a higher index since the chest slots move them down the list).
+The x and y are relative to where the regular screen top left would be.
+Set to large values to effectively "delete" a slot by moving it offscreen.
 
 ### Moving text around
 
@@ -655,16 +672,20 @@ You can move slots around by a specific index. This is not the index in the inve
 }
 ```
 
-You can move the window title around. The x and y are relative to the top left of the regular screen (like slots). Set to large values to effectively "delete" a slot by moving it offscreen.
+You can move the window title around. The x and y are relative to the top left of the regular screen (like slots).
+Set to large values to effectively "delete" a slot by moving it offscreen.
 
-The align only specifies the direction the text grows in, it does not the actual anchor point, so if you want right aligned text you will also need to move the origin of the text to the right (or it will just grow out of the left side of your screen).
+The "align" key only specifies the direction the text grows in, it does not the actual anchor point,
+so if you want right aligned text you will also need to move the origin of the text to the right (or it will just
+grow out of the left side of your screen).
 
 You can replace the text with another text to render instead.
 
 Available titles are
 
 - `containerTitle` for the title of the open container, typically at the very top.
-- `playerTitle` for the players inventory title. Note that in the player inventory without a chest or something open, the `containerTitle` is also used for the "Crafting" text.
+- `playerTitle` for the players inventory title. Note that in the player inventory without a chest or something open,
+  the `containerTitle` is also used for the "Crafting" text.
 - `repairCostTitle` for the repair cost label in anvils.
 
 ### Moving components around
@@ -685,7 +706,9 @@ Available titles are
 }
 ```
 
-Some other components can also be moved. These components might be buttons, text inputs or other things not fitting into any category. They can have a x, y (relative to the top left of the screen), as well as sometimes a width, height, and other properties. This is more of a wild card category, and which options work depends on the type of object.
+Some other components can also be moved. These components might be buttons, text inputs or other things not fitting
+into any category. They can have a x, y (relative to the top left of the screen), as well as sometimes a width, height,
+and other properties. This is more of a wild card category, and which options work depends on the type of object.
 
 Available options
 
@@ -721,9 +744,12 @@ Available options
 ## Text Replacements
 
 > [!WARNING]
-> This syntax is _experimental_ and may be reworked with no backwards compatibility guarantees. If you have a use case for this syntax, please contact me so that I can figure out what kind of features are needed for the final version of this API.
+> This syntax is _experimental_ and may be reworked with no backwards compatibility guarantees.
+> If you have a use case for this syntax, please contact me so that I can figure out what kind of features are needed
+> for the final version of this API.
 
-Firmament allows you to replace arbitrary texts with other texts during rendering. This only affects rendering, not what other mods see.
+Firmament allows you to replace arbitrary texts with other texts during rendering.
+This only affects rendering, not what other mods see.
 
 To do this, place a text override in `firmskyblock:overrides/texts/<my-override>.json`:
 
@@ -744,7 +770,8 @@ To do this, place a text override in `firmskyblock:overrides/texts/<my-override>
 }
 ```
 
-There are notably two separate "match" sections. This is important. The first (top-level) match checks against the entire text element, while the replacement match operates on each individual subcomponent. Let's look at an example:
+There are notably two separate "match" sections. This is important. The first (top-level) match checks against
+the entire text element, while the replacement match operates on each individual subcomponent. Let's look at an example:
 
 ```json
 {
@@ -767,7 +794,10 @@ There are notably two separate "match" sections. This is important. The first (t
 In this the entire text rendered out looks like `" ❁ Strength 510.45"` and the top-level match (`".*Strength.*"`) needs to match that line.
 
 Then each replacement (in the `replacements` array) is matched against each subcomponent. 
-First, it tries to find `"❁"` in the empty root element `""`. Then it tries the first child (`" "`) and fails again. Then it tries the `"❁ Strength "` component and finds one match. It then splits the `"❁ Strength "` component into multiple subsubcomponents and replaces just the `❁` part with the one specified in the replacements array. Afterwards, it fails to match the `"510.45"` component and returns.
+First, it tries to find `"❁"` in the empty root element `""`. Then it tries the first child (`" "`) and fails again.
+Then it tries the `"❁ Strength "` component and finds one match. It then splits the `"❁ Strength "` component into
+multiple subsubcomponents and replaces just the `❁` part with the one specified in the replacements array.
+Afterward, it fails to match the `"510.45"` component and returns.
 
 Our finalized text looks like this:
 
@@ -796,7 +826,8 @@ Our finalized text looks like this:
 }
 ```
 
-Which rendered out looks like ` <newIcon> Strength 510.45`, with all colours original, except the `<newIcon>` which not only has new text but also a new colour.
+Which rendered out looks like ` <newIcon> Strength 510.45`, with all colours original, except the `<newIcon>` which
+not only has new text but also a new colour.
 
 | Field                                | Required | Description                                                                                                                                                                                                                                                                                         |
 |--------------------------------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -850,7 +881,7 @@ should work purely based on predicates if possible. You can specify multiply scr
 
 ### Global item texture Screens
 
-In order to improve performance not all overrides are tested all the time. Instead you can prefilter by the screen that
+In order to improve performance not all overrides are tested all the time. Instead, you can prefilter by the screen that
 is open. First the gui is resolved to `assets/<namespace>/filters/screen/<id>.json`. Make sure to use your own namespace
 to avoid collisions with other texture packs that might use the same id for a screen.
 
@@ -903,7 +934,7 @@ which block models are replaced under which conditions:
 ```
 
 The referenced `block` can either be a regular json block model (like the ones in `assets/minecraft/blocks/`), or it can
-reference a blockstates json like in `assets/<namespace>/blockstates/<path>.json`. The blockstates.json is prefered and
+reference a blockstates json like in `assets/<namespace>/blockstates/<path>.json`. The blockstates.json is preferred and
 needs to match the vanilla format, so it is best to copy over the vanilla blockstates.json for the block you are editing
 and replace all block model paths with your own custom block models.
 
